@@ -1,9 +1,10 @@
-import React from 'react'
 import Head from 'next/head'
+
+import SubscribeButton from '../components/SubscribeButton'
 
 import styles from './home.module.scss'
 
-const Home: React.FC = () => {
+function Home(): JSX.Element {
   return (
     <>
       <Head>
@@ -20,6 +21,7 @@ const Home: React.FC = () => {
             Get access to all the publications <br />
             <span>for 9.90€ month</span>
           </p>
+          <SubscribeButton />
         </section>
 
         <img src="/images/avatar.svg" alt="Girl coding" />
