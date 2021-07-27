@@ -1,4 +1,5 @@
 import { useSession, signIn } from 'next-auth/client'
+import { useRouter } from 'next/router'
 
 import api from '../../services/api'
 import { getStripeJs } from '../../services/stripe-js'
@@ -12,10 +13,16 @@ interface SubscribeButtonProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubscribeButton({ priceId }: SubscribeButtonProps): JSX.Element {
   const [session] = useSession()
+  const router = useRouter()
 
   async function handleSubscribe() {
     if (!session) {
       signIn('github')
+      return
+    }
+
+    if (session.activeSubscription) {
+      router.push('/posts')
       return
     }
 
@@ -38,7 +45,7 @@ function SubscribeButton({ priceId }: SubscribeButtonProps): JSX.Element {
       className={styles.subscribeButton}
       onClick={handleSubscribe}
     >
-      Subscribe now
+      {session?.activeSubscription ? 'Go to posts' : 'Subscribe now'}
     </button>
   )
 }
